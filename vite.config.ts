@@ -5,7 +5,8 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/spend-wise/", // <-- GH Pages needs this (repo name)
+  // Remove base path for Netlify deployment (use "/" or remove entirely)
+  // base: "/spend-wise/", // Only needed for GitHub Pages
   server: {
     host: "::",
     port: 8080,
