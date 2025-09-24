@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
+# 💰 SpendWise
 
-## Project info
+SpendWise is a barebones **budget tracking web app** built with a modern full-stack setup:
 
-**URL**: https://lovable.dev/projects/ca29baf7-8ccb-420d-8004-efadb1d96c38
+- **Frontend:** React + Vite + Tailwind  
+- **Backend:** Spring Boot (Java)  
+- **Database:** PostgreSQL  
+- **Infra:** Docker & Docker Compose  
+- **Optional cloud integration:** AWS S3 for receipt uploads (later)
 
-## How can I edit this code?
+The goal of this MVP is simple: **users can create budgets, add expenses, and view their spending**. More advanced features (auth, charts, AI insights) will come later.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🚀 Core Features (MVP)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ca29baf7-8ccb-420d-8004-efadb1d96c38) and start prompting.
+- **Users**
+  - Create users (signup form)
+  - List, update, delete users (basic CRUD)
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Budgets**
+  - Create budgets with:
+    - Name (e.g., *October 2025 – Groceries*)
+    - Period (start + end date)
+    - Limit amount
+  - View budgets for a given user
+  - Update and delete budgets
+  - Expenses cascade delete when a budget is removed
 
-**Use your preferred IDE**
+- **Expenses**
+  - Add expenses under a budget
+  - Track description, amount, date, category
+  - (Optional) link a receipt URL (for S3 upload later)
+  - List, update, delete expenses for each budget
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Summary**
+  - Each budget shows:
+    - Limit
+    - Total spent
+    - Remaining
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🛠️ Tech Stack
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- **Frontend:** React, Vite, TailwindCSS  
+- **Backend:** Spring Boot 3, Spring Data JPA, Validation  
+- **Database:** PostgreSQL 16 (via Docker)  
+- **Build & Runtime:** Java 17, Maven  
+- **Containers:** Docker & Docker Compose  
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 📂 Project Structure
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+spendwise/
+├── frontend/           # React + Vite app (UI)
+├── backend/            # Spring Boot app (API)
+│   ├── model/          # Entities (User, Budget, Expense)
+│   ├── repo/           # JPA repositories
+│   ├── web/            # Controllers (CRUD endpoints)
+│   └── SpendWiseApplication.java
+├── docker-compose.yml  # API + DB containers
+└── README.md
+⚡ Getting Started (Local Dev)
+Clone the repo
+
+bash
+Copy code
+git clone https://github.com/AyanAmjad20/spend-wise.git
+cd spend-wise
+Start backend & database
+
+bash
+Copy code
+cd backend
+docker compose up --build
+Backend runs on http://localhost:8080.
+
+Start frontend
+
+bash
+Copy code
+cd frontend
+npm install
 npm run dev
-```
+Frontend runs on http://localhost:5173.
 
-**Edit a file directly in GitHub**
+🔑 API Overview
+Users
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+GET /api/users
 
-**Use GitHub Codespaces**
+POST /api/users
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+GET /api/users/{id}
 
-## What technologies are used for this project?
+PUT /api/users/{id}
 
-This project is built with:
+DELETE /api/users/{id}
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Budgets
 
-## How can I deploy this project?
+GET /api/budgets?userId={id}
 
-Simply open [Lovable](https://lovable.dev/projects/ca29baf7-8ccb-420d-8004-efadb1d96c38) and click on Share -> Publish.
+POST /api/budgets
 
-## Can I connect a custom domain to my Lovable project?
+GET /api/budgets/{id}
 
-Yes, you can!
+PUT /api/budgets/{id}
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+DELETE /api/budgets/{id}
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Expenses
+
+GET /api/expenses?userId={id}&budgetId={id}
+
+POST /api/expenses
+
+GET /api/expenses/{id}
+
+PUT /api/expenses/{id}
+
+DELETE /api/expenses/{id}
+
+🧭 Roadmap / Coming Soon
+ 🔐 Authentication & JWT (login, signup, sessions)
+
+ 📊 Dashboard with charts & insights
+
+ ☁️ AWS S3 receipt upload & image preview
+
+ 📅 Advanced filtering (date ranges, categories)
+
+ 📈 Budget rollover & recurring budgets
+
+ 👤 Profile settings (password reset, preferences)
+
+ ✅ Full test coverage (unit + integration)
+
+ 🚀 Deploy frontend (Vercel) & backend (Render/AWS ECS)
+
+🤝 Contributing
+This is a learning project for full-stack development.
+Feel free to fork, open issues, or submit PRs with improvements!
